@@ -23,6 +23,7 @@ const packages = await Promise.all(
 const versions = new Set(packages.map(({ manifest }) => manifest.version));
 if (versions.size !== 1) throw new Error('All public packages must use one fixed release version.');
 const [version] = versions;
+const distTag = version.includes('-') ? 'next' : 'latest';
 
 for (const { name, manifest } of packages) {
   for (const dependencyType of ['dependencies', 'peerDependencies']) {
@@ -49,13 +50,45 @@ if (process.argv.includes('--publish')) {
     throw new Error('Publishing is restricted to a tagged GitHub Actions release.');
   }
   for (const { name } of packages) {
+    const existingResult = spawnSync(
+      'npm',
+      [
+        'view',
+        `${name}@${version}`,
+        'version',
+        'gitHead',
+        '--json',
+        '--registry',
+        'https://registry.npmjs.org/',
+      ],
+      { encoding: 'utf8' },
+    );
+    if (existingResult.status === 0) {
+      const existing = JSON.parse(existingResult.stdout);
+      if (existing.version !== version || existing.gitHead !== process.env.GITHUB_SHA) {
+        throw new Error(`${name}@${version} already exists from a different commit.`);
+      }
+      process.stdout.write(`Skipping ${name}@${version}; it is already published.\n`);
+      continue;
+    }
     const result = spawnSync(
       'npm',
-      ['publish', '--workspace', name, '--access', 'public', '--provenance'],
+      [
+        'publish',
+        '--workspace',
+        name,
+        '--access',
+        'public',
+        '--tag',
+        distTag,
+        '--provenance',
+        '--registry',
+        'https://registry.npmjs.org/',
+      ],
       { stdio: 'inherit' },
     );
     if (result.status !== 0) process.exit(result.status ?? 1);
   }
 } else {
-  process.stdout.write(`Release train ${version}: ${packageNames.join(', ')}\n`);
+  process.stdout.write(`Release train ${version} (${distTag}): ${packageNames.join(', ')}\n`);
 }

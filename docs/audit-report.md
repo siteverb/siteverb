@@ -11,7 +11,7 @@ Agent Skill into an existing website repository, run `/siteverb full`, review tw
 boundaries, generate customer-owned WebMCP code plus `siteverb.webmcp.json`, prove the result in a
 native browser, and install customer-run CI without a Siteverb account, GitHub App, or cloud service.
 
-No known release-blocking implementation defect remains. The final source gate passes 110 tests
+No known release-blocking implementation defect remains. The final source gate passes 113 tests
 across 14 files, all workspace typechecks/builds, six public package checks, the fixed 0.1.0 release
 train, zero npm vulnerabilities, three native Chrome integrations, and clean source audits for every
 fixture.
@@ -154,7 +154,7 @@ without evidence.
 
 | Check              | Result                                                             |
 | ------------------ | ------------------------------------------------------------------ |
-| Unit tests         | 110 passed across 14 files; 0 failed; 0 skipped                    |
+| Unit tests         | 113 passed across 14 files; 0 failed; 0 skipped                    |
 | SDK                | 37 tests                                                           |
 | Contracts          | 11 tests                                                           |
 | Profiles           | 6 tests                                                            |
@@ -162,7 +162,7 @@ without evidence.
 | Audit              | 17 tests                                                           |
 | Runner             | 16 tests                                                           |
 | Action             | 6 tests                                                            |
-| Root release/skill | 11 tests                                                           |
+| Root release/skill | 14 tests                                                           |
 | TypeScript         | All workspaces pass strict typecheck                               |
 | Formatting         | Repository-wide Prettier check passes                              |
 | Builds             | Six packages and three examples pass                               |
@@ -213,16 +213,17 @@ These are platform or product boundaries, not hidden implementation claims:
 
 ## Human-controlled release prerequisites
 
-Source code cannot prove remote account settings. Before publishing 0.1.0, the maintainer must:
+The public repository, npm scope, and six `0.1.0-rc.0` package records now exist. Before stable
+`0.1.0`, the maintainer must:
 
-1. Create or configure `siteverb/siteverb` without overwriting local history.
-2. Protect `main` and release tags; require CI and CodeQL; disallow force pushes/deletions.
+1. Configure the protected GitHub `npm` environment and each package's exact trusted publisher.
+2. Protect `main` and `v*` release tags; require CI and CodeQL; disallow force pushes/deletions.
 3. Enable Dependabot alerts/updates, secret scanning, push protection, and private vulnerability reporting.
-4. Create the npm `@siteverb` scope and configure Trusted Publishing for the exact repository,
-   `.github/workflows/release.yml`, and protected `npm` environment.
-5. Confirm package names are available and handle npm's first-publication requirement directly.
+4. Publish `0.1.0-rc.1` through OIDC and verify provenance on all six packages.
+5. Confirm `next` advances to RC.1 while npm's required `latest` tag remains at RC.0.
 6. Perform trademark/domain clearance before paid launch.
-7. Create `v0.1.0` only after the remote checks pass.
+7. Create `v0.1.0` only after the remote checks and OIDC canary pass; stable publication advances
+   `latest` to `0.1.0`.
 
 ## Scope explicitly not started
 
@@ -230,4 +231,4 @@ The public repository does not contain the hosted dashboard, collector, GitHub A
 storage, billing, cloud orchestration, or production analytics. Those belong together in the future
 private `siteverb-cloud` monorepo after this standalone conversion and release workflow is accepted.
 
-No commit, push, npm publication, GitHub organization mutation, or deployment is part of this audit.
+No stable npm publication, hosted service, or deployment is part of this audit.

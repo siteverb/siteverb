@@ -97,6 +97,15 @@ will carry GitHub/npm trusted-publishing provenance.
 Do not run these commands while the manifests still say `0.1.0`. The RC must be a separate real
 version so the stable `0.1.0` remains available to the OIDC workflow.
 
+For the first version of a new package, npmjs.com creates `latest` even when the publish command
+uses `--tag next`. The registry requires `latest` to remain resolvable and rejects attempts to
+remove it with `400 Bad Request`. Do not retry that deletion or treat it as an OTP failure.
+
+Until the stable release, both `next` and `latest` therefore point to `0.1.0-rc.0`. This temporarily
+makes an unqualified install resolve the RC, but there is no valid empty-`latest` state to restore.
+The published RC.0 packages and `v0.1.0-rc.0` tag are immutable; never move the tag or rebuild that
+version.
+
 ## Configure trusted publishing
 
 Open each package on npm, then **Settings → Trusted publishing → GitHub Actions**. Configure exactly:
@@ -112,6 +121,18 @@ Open each package on npm, then **Settings → Trusted publishing → GitHub Acti
 Enter only `release.yml`, not `.github/workflows/release.yml`. npm validates these case-sensitive
 values only when a publish is attempted. Each package needs its own configuration and can have only
 one trusted publisher.
+
+## Prove OIDC with a release canary
+
+Do not make stable `0.1.0` the first trusted-publishing attempt. Prepare `0.1.0-rc.1` from the
+reviewed stable commit, update internal ranges and runtime version constants, and publish a GitHub
+prerelease tagged exactly `v0.1.0-rc.1`. The release script sends prereleases to `next`, stable
+versions to `latest`, and skips an exact package version only when its npm `gitHead` matches the
+running GitHub commit. A partially completed six-package workflow can therefore be rerun safely.
+
+Verify all six RC.1 package pages show GitHub provenance, `next` points to `0.1.0-rc.1`, and
+`latest` remains at `0.1.0-rc.0`. This proves every trusted-publisher entry and the protected `npm`
+environment before consuming the stable version.
 
 ## Publish stable 0.1.0
 
@@ -133,6 +154,8 @@ the documented bootstrap requires none.
 - Never place an npm password, OTP, recovery code, or write token in chat, a file, or a command that
   will remain in shell history.
 - Never reuse `0.1.0` after any package with that version has reached npm; npm versions are immutable.
+- Never retry removing `latest` from a first-published package; npmjs.com requires that tag and
+  returns `400 Bad Request` by design.
 - Stop after any partial failure and inspect registry state before retrying. Do not blindly rerun the
   entire list because already-published versions will fail.
 - Do not create the GitHub `v0.1.0` release until all six trusted-publisher entries are configured.
@@ -141,5 +164,6 @@ the documented bootstrap requires none.
 
 `.github/workflows/release.yml` grants only `contents: read` and `id-token: write`, runs on a
 GitHub-hosted runner, disables package-manager caching, validates the exact release tag, and invokes
-`scripts/release-packages.mjs`. The script refuses local publication and publishes the six-package
-train only from a tagged GitHub Actions release.
+`scripts/release-packages.mjs`. The script refuses local publication, selects `next` or `latest`
+from the package version, and publishes the six-package train only from a tagged GitHub Actions
+release.

@@ -9,6 +9,7 @@ import { projectContractJsonSchema, runReportJsonSchema } from '@siteverb/contra
 
 const releaseVersion = JSON.parse(readFileSync(resolve('packages/contracts/package.json'), 'utf8'))
   .version as string;
+const releaseDistTag = releaseVersion.includes('-') ? 'next' : 'latest';
 
 describe('release train', () => {
   it('keeps public packages on one compatible version', () => {
@@ -17,6 +18,7 @@ describe('release train', () => {
     });
     expect(result.status).toBe(0);
     expect(result.stdout).toContain(`Release train ${releaseVersion}`);
+    expect(result.stdout).toContain(`(${releaseDistTag})`);
   });
 
   it('rejects a release tag that differs from package versions', () => {
@@ -105,5 +107,13 @@ describe('release train', () => {
         /^node \.\.\/\.\.\/scripts\/clean-package-dist\.mjs && /,
       );
     }
+  });
+
+  it('routes prereleases to next and only resumes packages from the same commit', async () => {
+    const source = await readFile(resolve('scripts/release-packages.mjs'), 'utf8');
+    expect(source).toContain("version.includes('-') ? 'next' : 'latest'");
+    expect(source).toContain('existing.gitHead !== process.env.GITHUB_SHA');
+    expect(source).toContain("'--tag',");
+    expect(source).toContain('distTag,');
   });
 });
