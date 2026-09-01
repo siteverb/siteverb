@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/audit",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.0",
   "description": "Static coverage audit for Siteverb and WebMCP registration paths.",
   "type": "module",
   "sideEffects": false,
@@ -9,7 +9,7 @@
     "README.md"
   ],
   "bin": {
-    "siteverb-audit": "./dist/cli.js"
+    "siteverb-audit": "dist/cli.js"
   },
   "exports": {
     ".": {
@@ -46,7 +46,7 @@
     "provenance": true
   },
   "dependencies": {
-    "@siteverb/contracts": "^0.1.0",
+    "@siteverb/contracts": "^0.1.0-rc.0",
     "@babel/parser": "^7.28.4",
     "@babel/types": "^7.28.4",
     "parse5": "^8.0.0"

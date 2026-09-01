@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/runner",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.0",
   "description": "Deterministic real-browser runner for Siteverb WebMCP journey contracts.",
   "type": "module",
   "sideEffects": false,
@@ -9,7 +9,7 @@
     "README.md"
   ],
   "bin": {
-    "siteverb-run": "./dist/cli.js"
+    "siteverb-run": "dist/cli.js"
   },
   "exports": {
     ".": {
@@ -46,8 +46,8 @@
     "provenance": true
   },
   "dependencies": {
-    "@siteverb/contracts": "^0.1.0",
-    "@siteverb/profiles": "^0.1.0",
+    "@siteverb/contracts": "^0.1.0-rc.0",
+    "@siteverb/profiles": "^0.1.0-rc.0",
     "puppeteer-core": "25.9.0"
   }
 }

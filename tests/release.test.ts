@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
@@ -6,13 +7,16 @@ import { format, resolveConfig } from 'prettier';
 import { parse } from 'yaml';
 import { projectContractJsonSchema, runReportJsonSchema } from '@siteverb/contracts';
 
+const releaseVersion = JSON.parse(readFileSync(resolve('packages/contracts/package.json'), 'utf8'))
+  .version as string;
+
 describe('release train', () => {
   it('keeps public packages on one compatible version', () => {
     const result = spawnSync(process.execPath, ['scripts/release-packages.mjs'], {
       encoding: 'utf8',
     });
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain('Release train 0.1.0');
+    expect(result.stdout).toContain(`Release train ${releaseVersion}`);
   });
 
   it('rejects a release tag that differs from package versions', () => {
@@ -22,7 +26,7 @@ describe('release train', () => {
       { encoding: 'utf8' },
     );
     expect(result.status).not.toBe(0);
-    expect(result.stderr).toContain('Release tag must be v0.1.0');
+    expect(result.stderr).toContain(`Release tag must be v${releaseVersion}`);
   });
 
   it('uses OIDC permissions and no long-lived npm token', async () => {
@@ -71,6 +75,18 @@ describe('release train', () => {
       expect(await format(JSON.stringify(expected), { ...options, filepath: absolutePath })).toBe(
         source,
       );
+    }
+  });
+
+  it('uses canonical executable bin mappings for the public CLIs', async () => {
+    const manifests = [
+      ['packages/audit/package.json', { 'siteverb-audit': 'dist/cli.js' }],
+      ['packages/runner/package.json', { 'siteverb-run': 'dist/cli.js' }],
+    ] as const;
+
+    for (const [path, expected] of manifests) {
+      const manifest = JSON.parse(await readFile(resolve(path), 'utf8'));
+      expect(manifest.bin).toEqual(expected);
     }
   });
 });
