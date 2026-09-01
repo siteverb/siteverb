@@ -89,4 +89,22 @@ describe('release train', () => {
       expect(manifest.bin).toEqual(expected);
     }
   });
+
+  it('builds dependency types first and cleans every public package output', async () => {
+    const rootManifest = JSON.parse(await readFile(resolve('package.json'), 'utf8'));
+    expect(rootManifest.scripts.typecheck).toContain(
+      'npm run build --workspace @siteverb/contracts',
+    );
+    expect(rootManifest.scripts.typecheck).toContain('npm run build --workspace @siteverb/webmcp');
+    expect(rootManifest.scripts.typecheck).toContain(
+      'npm run build --workspace @siteverb/profiles',
+    );
+
+    for (const name of ['contracts', 'webmcp', 'react', 'profiles', 'audit', 'runner']) {
+      const manifest = JSON.parse(await readFile(resolve(`packages/${name}/package.json`), 'utf8'));
+      expect(manifest.scripts.build).toMatch(
+        /^node \.\.\/\.\.\/scripts\/clean-package-dist\.mjs && /,
+      );
+    }
+  });
 });
