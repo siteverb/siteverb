@@ -33,7 +33,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && esbuild src/index.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=dist/browser.js",
+    "build": "node ../../scripts/clean-package-dist.mjs && tsc -p tsconfig.build.json && esbuild src/index.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=dist/browser.js",
     "package:check": "publint && attw --pack . --profile esm-only",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"

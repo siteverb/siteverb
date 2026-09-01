@@ -24,7 +24,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node ../../scripts/clean-package-dist.mjs && tsc -p tsconfig.build.json",
     "package:check": "publint && attw --pack . --profile esm-only",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"

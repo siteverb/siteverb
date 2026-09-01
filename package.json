@@ -27,7 +27,7 @@
     "test:integration:webmcp": "npm run build && start-server-and-test \"npm run preview --workspace @siteverb/example-vanilla\" http://127.0.0.1:4173 \"webmcp-evals --chrome-channel chrome smoke -u http://127.0.0.1:4173 -e examples/vanilla/evals.json --timeout 30000 --verbose\"",
     "test:integration:runner": "npm run build && start-server-and-test \"npm run preview --workspace @siteverb/example-stateful\" http://127.0.0.1:4174 \"node packages/runner/dist/cli.js --contract examples/stateful/siteverb.webmcp.json --url http://127.0.0.1:4174 --output .siteverb/stateful-report.json --chrome-channel chrome --allow-mutations --approve cart.prepare-checkout --profile chrome-152-native,chatgpt-site-tools-2026-08-26 && node examples/stateful/scripts/assert-report.mjs .siteverb/stateful-report.json\"",
     "test:integration:react": "npm run build && node packages/audit/dist/cli.js --root examples/react --contract siteverb.webmcp.json && start-server-and-test \"npm run preview --workspace @siteverb/example-react\" http://127.0.0.1:4175 \"node packages/runner/dist/cli.js --contract examples/react/siteverb.webmcp.json --url http://127.0.0.1:4175 --output .siteverb/react-report.json --chrome-channel chrome\"",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run build --workspace @siteverb/contracts && npm run build --workspace @siteverb/webmcp && npm run build --workspace @siteverb/profiles && npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
