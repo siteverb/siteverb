@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/webmcp",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.1",
   "description": "Native-first WebMCP tools with stable identity, lifecycle control, and production-safe instrumentation.",
   "type": "module",
   "sideEffects": false,

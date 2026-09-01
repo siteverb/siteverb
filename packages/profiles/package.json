@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/profiles",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.1",
   "description": "Evidence-labeled client compatibility profiles for WebMCP contracts.",
   "type": "module",
   "sideEffects": false,
@@ -45,6 +45,6 @@
     "provenance": true
   },
   "dependencies": {
-    "@siteverb/contracts": "^0.1.0"
+    "@siteverb/contracts": "^0.1.0-rc.1"
   }
 }
