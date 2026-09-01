@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "runId": "64fd0c08-f6ba-4d19-a666-dfbdfec69c42",
+  "startedAt": "2026-09-01T03:44:52.708Z",
+  "finishedAt": "2026-09-01T03:44:54.122Z",
+  "targetUrl": "http://127.0.0.1:4174/",
+  "project": "siteverb-stateful-fixture",
+  "contractHash": "sha256:fff38c607227ab9be4b5a1d4dfb9fc7b77a2812d903d067ec9c0af1e0a4f7ecd",
+  "runner": {
+    "name": "@siteverb/runner",
+    "version": "0.1.0"
+  },
+  "browser": {
+    "name": "Chrome",
+    "version": "152.0.7977.65",
+    "channel": "chrome",
+    "evidence": "real-browser"
+  },
+  "summary": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "compatibility": [
+    {
+      "profileId": "chrome-152-native",
+      "status": "compatible",
+      "findings": []
+    }
+  ],
+  "journeys": [
+    {
+      "id": "cart.prepare-trail-shoe-checkout",
+      "name": "Find a trail shoe and prepare checkout",
+      "status": "passed",
+      "durationMs": 1022,
+      "steps": [
+        {
+          "index": 1,
+          "toolId": "catalog.search-products",
+          "toolName": "search_products",
+          "status": "passed",
+          "durationMs": 16
+        },
+        {
+          "index": 2,
+          "toolId": "cart.add-item",
+          "toolName": "add_to_cart",
+          "status": "passed",
+          "durationMs": 4
+        },
+        {
+          "index": 3,
+          "toolId": "cart.get-current",
+          "toolName": "get_cart",
+          "status": "passed",
+          "durationMs": 1
+        },
+        {
+          "index": 4,
+          "toolId": "cart.prepare-checkout",
+          "toolName": "prepare_checkout",
+          "status": "passed",
+          "durationMs": 5
+        },
+        {
+          "index": 5,
+          "toolId": "cart.get-checkout-summary",
+          "toolName": "get_checkout_summary",
+          "status": "passed",
+          "durationMs": 0
+        }
+      ],
+      "cleanup": [
+        {
+          "index": 1,
+          "toolId": "cart.remove-item",
+          "toolName": "remove_from_cart",
+          "status": "passed",
+          "durationMs": 2
+        }
+      ]
+    }
+  ]
+}

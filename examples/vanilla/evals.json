@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Search the visible catalog",
+    "messages": [
+      {
+        "role": "user",
+        "type": "message",
+        "content": "Find products with trail in the name."
+      }
+    ],
+    "expectedCall": [
+      {
+        "functionName": "search_products",
+        "arguments": {
+          "query": "trail"
+        },
+        "result": {
+          "count": 1,
+          "products": ["Trail shoe"]
+        }
+      }
+    ]
+  }
+]

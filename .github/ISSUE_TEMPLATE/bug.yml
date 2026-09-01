@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible defect in a Siteverb package, skill, Action, or fixture.
+title: '[bug] '
+labels: ['bug', 'needs-triage']
+body:
+  - type: markdown
+    attributes:
+      value: Do not include credentials, production prompts, tool inputs/results, or private source.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - '@siteverb/webmcp'
+        - '@siteverb/contracts'
+        - '@siteverb/runner'
+        - '@siteverb/audit'
+        - '@siteverb/profiles'
+        - '@siteverb/react'
+        - GitHub Action
+        - Agent Skill
+        - Examples or documentation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Exact version or commit
+      placeholder: 0.1.0 or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node/npm, browser name/version, and framework where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide a public repository or the smallest privacy-safe code and commands.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and evidence
+      description: Include bounded errors and evidence labels; redact sensitive values.
+    validations:
+      required: true

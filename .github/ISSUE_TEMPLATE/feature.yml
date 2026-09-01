@@ -1,0 +1,35 @@
+name: Feature request
+description: Propose a focused improvement grounded in a real WebMCP journey.
+title: '[request] '
+labels: ['enhancement', 'needs-triage']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Customer problem
+      description: Describe the task, current failure, and why existing APIs cannot solve it.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Name affected browser/client versions, repository patterns, or repeated journeys.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Smallest useful change
+    validations:
+      required: true
+  - type: dropdown
+    id: boundary
+    attributes:
+      label: Product boundary
+      options:
+        - Portable public tooling
+        - Hosted/cloud capability
+        - Unsure
+    validations:
+      required: true

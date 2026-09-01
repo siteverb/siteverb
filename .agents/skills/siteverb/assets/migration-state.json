@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "phase": "inventory",
+  "coverage": "curated",
+  "baseline": {
+    "sha": null,
+    "dirtyPaths": []
+  },
+  "environment": {
+    "startCommand": null,
+    "verificationOrigin": null,
+    "secureContext": null,
+    "backendOrigins": [],
+    "corsOrigins": [],
+    "authFixtures": []
+  },
+  "areas": [],
+  "tools": [],
+  "blockers": [],
+  "log": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "@siteverb/react",
+  "version": "0.1.0",
+  "description": "React and Next.js lifecycle bindings for @siteverb/webmcp.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "package:check": "publint && attw --pack . --profile esm-only",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "webmcp",
+    "react",
+    "nextjs",
+    "browser-agents"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteverb/siteverb.git",
+    "directory": "packages/react"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "@siteverb/webmcp": "^0.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.3"
+  }
+}

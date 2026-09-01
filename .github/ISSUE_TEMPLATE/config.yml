@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/siteverb/siteverb/security/advisories/new
+    about: Report vulnerabilities without exposing sensitive details publicly.
+  - name: WebMCP specification issue
+    url: https://github.com/webmachinelearning/webmcp/issues
+    about: Use the upstream repository when the issue belongs to the WebMCP standard itself.

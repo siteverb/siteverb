@@ -1,0 +1,30 @@
+name: Publish release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm:
+    if: github.repository == 'siteverb/siteverb'
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test:integration:webmcp
+      - run: npm run test:integration:runner
+      - run: npm run test:integration:react
+      - name: Verify release tag
+        run: node scripts/release-packages.mjs --check-tag "$GITHUB_REF_NAME"
+      - name: Publish npm packages with provenance
+        run: node scripts/release-packages.mjs --publish

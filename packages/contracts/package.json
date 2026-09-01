@@ -1,0 +1,55 @@
+{
+  "name": "@siteverb/contracts",
+  "version": "0.1.0",
+  "description": "Portable project contracts and evidence reports for Siteverb WebMCP journeys.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "schema",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "import": "./dist/schema.js"
+    },
+    "./siteverb.webmcp.schema.json": "./schema/siteverb.webmcp.schema.json",
+    "./report.schema.json": "./schema/report.schema.json",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/write-schema.mjs",
+    "package:check": "publint && attw --pack . --profile esm-only",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "webmcp",
+    "browser-agents",
+    "testing",
+    "json-schema"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteverb/siteverb.git",
+    "directory": "packages/contracts"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "zod": "^4.1.5"
+  }
+}

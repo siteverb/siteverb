@@ -1,0 +1,77 @@
+{
+  "$schema": "../../packages/contracts/schema/siteverb.webmcp.schema.json",
+  "version": 1,
+  "project": "siteverb-vanilla-example",
+  "support": [
+    {
+      "id": "chrome-152-native",
+      "version": "152.0.7977.65",
+      "evidence": "real-browser"
+    }
+  ],
+  "tools": [
+    {
+      "id": "catalog.search-products",
+      "name": "search_products",
+      "title": "Search products",
+      "description": "Filter the visible product catalog by a case-insensitive search query.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Words in the product name."
+          }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "risk": "read-only",
+      "routes": ["/"],
+      "examples": [
+        {
+          "name": "Find trail products",
+          "input": {
+            "query": "trail"
+          }
+        }
+      ]
+    }
+  ],
+  "journeys": [
+    {
+      "id": "catalog.search-visible-products",
+      "name": "Search the visible catalog",
+      "start": "/",
+      "steps": [
+        {
+          "tool": "catalog.search-products",
+          "input": {
+            "query": "trail"
+          },
+          "expect": {
+            "result": {
+              "contains": {
+                "count": 1,
+                "products": ["Trail shoe"]
+              }
+            },
+            "dom": [
+              {
+                "selector": "#products",
+                "state": "visible",
+                "textContains": "Trail shoe"
+              }
+            ]
+          }
+        }
+      ],
+      "policy": {
+        "requireHumanBefore": []
+      }
+    }
+  ]
+}

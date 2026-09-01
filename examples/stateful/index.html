@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Siteverb Stateful Fixture</title>
+  </head>
+  <body>
+    <main>
+      <h1>Trail Supply</h1>
+      <p id="phase" role="status">Catalog ready</p>
+      <section aria-labelledby="results-heading">
+        <h2 id="results-heading">Results</h2>
+        <ul id="results"></ul>
+      </section>
+      <section aria-labelledby="cart-heading">
+        <h2 id="cart-heading">Cart</h2>
+        <ul id="cart"></ul>
+      </section>
+      <section id="checkout" hidden aria-labelledby="checkout-heading">
+        <h2 id="checkout-heading">Checkout review</h2>
+        <p id="checkout-summary"></p>
+        <button type="button">Continue in the visible checkout</button>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

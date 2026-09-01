@@ -1,0 +1,54 @@
+{
+  "name": "@siteverb/audit",
+  "version": "0.1.0",
+  "description": "Static coverage audit for Siteverb and WebMCP registration paths.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bin": {
+    "siteverb-audit": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "package:check": "publint && attw --pack . --profile esm-only",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "webmcp",
+    "static-analysis",
+    "typescript",
+    "ci"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteverb/siteverb.git",
+    "directory": "packages/audit"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "@siteverb/contracts": "^0.1.0",
+    "@babel/parser": "^7.28.4",
+    "@babel/types": "^7.28.4",
+    "parse5": "^8.0.0"
+  }
+}

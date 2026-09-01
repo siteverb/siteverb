@@ -1,0 +1,48 @@
+{
+  "$schema": "../../packages/contracts/schema/siteverb.webmcp.schema.json",
+  "version": 1,
+  "project": "siteverb-react-fixture",
+  "support": [
+    {
+      "id": "chrome-152-native",
+      "version": "152.0.7977.65",
+      "evidence": "real-browser"
+    }
+  ],
+  "tools": [
+    {
+      "id": "catalog.search-react-products",
+      "name": "search_react_products",
+      "description": "Filter the React product list by a case-insensitive query.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "Words in the product name." }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true },
+      "risk": "read-only",
+      "routes": ["/"],
+      "examples": [{ "name": "Find trail products", "input": { "query": "trail" } }]
+    }
+  ],
+  "journeys": [
+    {
+      "id": "catalog.search-react-catalog",
+      "name": "Search the React catalog",
+      "start": "/",
+      "steps": [
+        {
+          "tool": "catalog.search-react-products",
+          "input": { "query": "trail" },
+          "expect": {
+            "result": { "contains": { "count": 1 } },
+            "dom": [{ "selector": "#react-products", "textContains": "Trail shoe" }]
+          }
+        }
+      ]
+    }
+  ]
+}

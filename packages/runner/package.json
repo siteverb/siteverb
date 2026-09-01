@@ -1,0 +1,53 @@
+{
+  "name": "@siteverb/runner",
+  "version": "0.1.0",
+  "description": "Deterministic real-browser runner for Siteverb WebMCP journey contracts.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bin": {
+    "siteverb-run": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "package:check": "publint && attw --pack . --profile esm-only",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "webmcp",
+    "browser-testing",
+    "puppeteer",
+    "github-actions"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteverb/siteverb.git",
+    "directory": "packages/runner"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "@siteverb/contracts": "^0.1.0",
+    "@siteverb/profiles": "^0.1.0",
+    "puppeteer-core": "25.9.0"
+  }
+}

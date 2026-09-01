@@ -1,0 +1,148 @@
+{
+  "$schema": "../../packages/contracts/schema/siteverb.webmcp.schema.json",
+  "version": 1,
+  "project": "siteverb-stateful-fixture",
+  "support": [
+    {
+      "id": "chrome-152-native",
+      "version": "152.0.7977.65",
+      "evidence": "real-browser"
+    }
+  ],
+  "tools": [
+    {
+      "id": "catalog.search-products",
+      "name": "search_products",
+      "description": "Search the visible catalog by product name, size, and maximum price.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "Words in the product name." },
+          "size": { "type": "number", "description": "Required product size." },
+          "maxPrice": { "type": "number", "description": "Maximum price in US dollars." }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true },
+      "risk": "read-only",
+      "routes": ["/"],
+      "examples": [
+        {
+          "name": "Find a size 11 trail shoe under $160",
+          "input": { "query": "trail", "size": 11, "maxPrice": 160 }
+        }
+      ]
+    },
+    {
+      "id": "cart.add-item",
+      "name": "add_to_cart",
+      "description": "Add one in-stock catalog product to the current cart.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "sku": { "type": "string", "description": "Exact catalog SKU." } },
+        "required": ["sku"],
+        "additionalProperties": false
+      },
+      "risk": "reversible",
+      "routes": ["/"],
+      "examples": [{ "name": "Add the trail shoe", "input": { "sku": "trail-shoe-11" } }]
+    },
+    {
+      "id": "cart.get-current",
+      "name": "get_cart",
+      "description": "Read the current cart contents and total price.",
+      "annotations": { "readOnlyHint": true },
+      "risk": "read-only",
+      "routes": ["/"],
+      "examples": [{ "name": "Read the cart", "input": {} }]
+    },
+    {
+      "id": "cart.prepare-checkout",
+      "name": "prepare_checkout",
+      "description": "Prepare a visible checkout review without purchasing or charging the user.",
+      "risk": "consequential",
+      "routes": ["/"],
+      "examples": [{ "name": "Prepare checkout review", "input": {} }]
+    },
+    {
+      "id": "cart.get-checkout-summary",
+      "name": "get_checkout_summary",
+      "description": "Read the prepared checkout summary before the human confirmation step.",
+      "annotations": { "readOnlyHint": true },
+      "risk": "read-only",
+      "routes": ["/"],
+      "examples": [{ "name": "Read checkout summary", "input": {} }]
+    },
+    {
+      "id": "cart.remove-item",
+      "name": "remove_from_cart",
+      "description": "Remove every instance of a product SKU from the current cart.",
+      "inputSchema": {
+        "type": "object",
+        "properties": { "sku": { "type": "string", "description": "Exact cart SKU." } },
+        "required": ["sku"],
+        "additionalProperties": false
+      },
+      "risk": "reversible",
+      "routes": ["/"],
+      "examples": [{ "name": "Remove the trail shoe", "input": { "sku": "trail-shoe-11" } }]
+    }
+  ],
+  "journeys": [
+    {
+      "id": "cart.prepare-trail-shoe-checkout",
+      "name": "Find a trail shoe and prepare checkout",
+      "start": "/",
+      "steps": [
+        {
+          "tool": "catalog.search-products",
+          "input": { "query": "trail", "size": 11, "maxPrice": 160 },
+          "expect": {
+            "result": { "contains": { "count": 1 } },
+            "dom": [{ "selector": "#results", "textContains": "Trail shoe" }]
+          }
+        },
+        {
+          "tool": "cart.add-item",
+          "input": { "sku": "trail-shoe-11" },
+          "expect": {
+            "result": { "contains": { "cartCount": 1 } },
+            "dom": [{ "selector": "#cart", "textContains": "Trail shoe" }]
+          }
+        },
+        {
+          "tool": "cart.get-current",
+          "input": {},
+          "expect": { "result": { "contains": { "count": 1, "total": 140 } } }
+        },
+        {
+          "tool": "cart.prepare-checkout",
+          "input": {},
+          "expect": {
+            "result": { "contains": { "prepared": true, "requiresHumanConfirmation": true } },
+            "dom": [{ "selector": "#checkout", "state": "visible" }]
+          }
+        },
+        {
+          "tool": "cart.get-checkout-summary",
+          "input": {},
+          "expect": { "result": { "contains": { "prepared": true, "itemCount": 1, "total": 140 } } }
+        }
+      ],
+      "cleanup": [
+        {
+          "tool": "cart.remove-item",
+          "input": { "sku": "trail-shoe-11" },
+          "expect": {
+            "result": { "contains": { "removed": true, "cartCount": 0 } },
+            "dom": [{ "selector": "#cart", "state": "attached", "textContains": "" }]
+          }
+        }
+      ],
+      "policy": {
+        "requireHumanBefore": ["cart.prepare-checkout"]
+      }
+    }
+  ]
+}

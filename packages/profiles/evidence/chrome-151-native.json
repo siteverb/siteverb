@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "runId": "9d522fcd-7c57-45cc-945e-68e9740d0071",
+  "startedAt": "2026-09-01T02:56:34.348Z",
+  "finishedAt": "2026-09-01T02:56:35.814Z",
+  "targetUrl": "http://127.0.0.1:4173/",
+  "project": "siteverb-vanilla-example",
+  "contractHash": "sha256:a55bc790bdcfdc36a110245f6bb5ea3f46b52cf7fe9c99cec2ba587f9948f33f",
+  "runner": {
+    "name": "@siteverb/runner",
+    "version": "0.1.0"
+  },
+  "browser": {
+    "name": "Chrome",
+    "version": "151.0.7922.175",
+    "channel": "chrome",
+    "evidence": "real-browser"
+  },
+  "summary": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "compatibility": [],
+  "journeys": [
+    {
+      "id": "catalog.search-visible-products",
+      "name": "Search the visible catalog",
+      "status": "passed",
+      "durationMs": 985,
+      "steps": [
+        {
+          "index": 1,
+          "toolId": "catalog.search-products",
+          "toolName": "search_products",
+          "status": "passed",
+          "durationMs": 15
+        }
+      ],
+      "cleanup": []
+    }
+  ]
+}

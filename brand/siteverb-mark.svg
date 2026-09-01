@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Siteverb mark</title>
+  <desc id="desc">A browser window containing a connected action path.</desc>
+  <rect width="512" height="512" rx="104" fill="#10161b"/>
+  <rect x="72" y="86" width="368" height="340" rx="44" fill="#f4f7f2"/>
+  <path d="M72 152h368" stroke="#10161b" stroke-width="18"/>
+  <circle cx="120" cy="119" r="12" fill="#ff6854"/>
+  <circle cx="158" cy="119" r="12" fill="#22b573"/>
+  <circle cx="196" cy="119" r="12" fill="#f5c84c"/>
+  <path d="M149 224h121c28 0 42 36 20 53l-60 46c-22 17-8 53 20 53h113" fill="none" stroke="#10161b" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="149" cy="224" r="25" fill="#22b573" stroke="#10161b" stroke-width="14"/>
+  <path d="m337 340 42 36-42 36" fill="none" stroke="#ff6854" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,57 @@
+{
+  "name": "@siteverb/webmcp",
+  "version": "0.1.0",
+  "description": "Native-first WebMCP tools with stable identity, lifecycle control, and production-safe instrumentation.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing/index.d.ts",
+      "import": "./dist/testing/index.js"
+    },
+    "./evals": {
+      "types": "./dist/evals/index.d.ts",
+      "import": "./dist/evals/index.js"
+    },
+    "./browser": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/browser.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && esbuild src/index.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=dist/browser.js",
+    "package:check": "publint && attw --pack . --profile esm-only",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "webmcp",
+    "browser-agents",
+    "ai-agents",
+    "tool-calling"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteverb/siteverb.git",
+    "directory": "packages/webmcp"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

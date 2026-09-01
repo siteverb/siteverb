@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": { "$ref": "#/$defs/__schema0" },
+    "runId": { "$ref": "#/$defs/__schema1" },
+    "startedAt": { "$ref": "#/$defs/__schema2" },
+    "finishedAt": { "$ref": "#/$defs/__schema3" },
+    "targetUrl": { "$ref": "#/$defs/__schema4" },
+    "project": { "$ref": "#/$defs/__schema5" },
+    "contractHash": { "$ref": "#/$defs/__schema6" },
+    "runner": { "$ref": "#/$defs/__schema7" },
+    "browser": { "$ref": "#/$defs/__schema8" },
+    "summary": { "$ref": "#/$defs/__schema10" },
+    "compatibility": { "$ref": "#/$defs/__schema11" },
+    "journeys": { "$ref": "#/$defs/__schema15" }
+  },
+  "required": [
+    "version",
+    "runId",
+    "startedAt",
+    "finishedAt",
+    "targetUrl",
+    "project",
+    "contractHash",
+    "runner",
+    "browser",
+    "summary",
+    "compatibility",
+    "journeys"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "__schema0": { "type": "number", "const": 1 },
+    "__schema1": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "__schema2": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "__schema3": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+    },
+    "__schema4": { "type": "string", "maxLength": 500, "format": "uri" },
+    "__schema5": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "__schema6": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "__schema7": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "version": { "type": "string", "minLength": 1, "maxLength": 120 }
+      },
+      "required": ["name", "version"],
+      "additionalProperties": false
+    },
+    "__schema8": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "version": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "channel": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "evidence": { "$ref": "#/$defs/__schema9" }
+      },
+      "required": ["name", "version", "channel", "evidence"],
+      "additionalProperties": false
+    },
+    "__schema9": {
+      "type": "string",
+      "enum": ["real-client", "real-browser", "official-sdk", "documented-profile", "spec-only"]
+    },
+    "__schema10": {
+      "type": "object",
+      "properties": {
+        "passed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "failed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "skipped": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+      },
+      "required": ["passed", "failed", "skipped"],
+      "additionalProperties": false
+    },
+    "__schema11": {
+      "default": [],
+      "maxItems": 20,
+      "type": "array",
+      "items": { "$ref": "#/$defs/__schema12" }
+    },
+    "__schema12": {
+      "type": "object",
+      "properties": {
+        "profileId": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "status": { "type": "string", "enum": ["compatible", "incompatible", "unknown"] },
+        "findings": { "maxItems": 2500, "type": "array", "items": { "$ref": "#/$defs/__schema13" } }
+      },
+      "required": ["profileId", "status", "findings"],
+      "additionalProperties": false
+    },
+    "__schema13": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "evidence": { "$ref": "#/$defs/__schema9" },
+        "message": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "severity": { "type": "string", "enum": ["error", "warning"] },
+        "source": { "type": "string", "maxLength": 500, "format": "uri" },
+        "toolId": { "$ref": "#/$defs/__schema14" }
+      },
+      "required": ["code", "evidence", "message", "severity", "source", "toolId"],
+      "additionalProperties": false
+    },
+    "__schema14": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9_-]*(?:\\.[a-z][a-z0-9_-]*)+$"
+    },
+    "__schema15": { "maxItems": 200, "type": "array", "items": { "$ref": "#/$defs/__schema16" } },
+    "__schema16": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/__schema14" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "status": { "type": "string", "enum": ["passed", "failed", "skipped"] },
+        "durationMs": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "steps": { "maxItems": 100, "type": "array", "items": { "$ref": "#/$defs/__schema17" } },
+        "cleanup": {
+          "default": [],
+          "maxItems": 100,
+          "type": "array",
+          "items": { "$ref": "#/$defs/__schema17" }
+        },
+        "error": { "type": "string", "maxLength": 4000 }
+      },
+      "required": ["id", "name", "status", "durationMs", "steps", "cleanup"],
+      "additionalProperties": false
+    },
+    "__schema17": {
+      "type": "object",
+      "properties": {
+        "index": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 },
+        "toolId": { "$ref": "#/$defs/__schema14" },
+        "toolName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "status": { "type": "string", "enum": ["passed", "failed", "skipped"] },
+        "durationMs": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "error": { "type": "string", "maxLength": 4000 }
+      },
+      "required": ["index", "toolId", "toolName", "status", "durationMs"],
+      "additionalProperties": false
+    }
+  }
+}

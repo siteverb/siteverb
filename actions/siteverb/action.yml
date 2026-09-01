@@ -1,0 +1,202 @@
+name: Siteverb WebMCP Journey Check
+description: Run deterministic WebMCP journeys in a real browser and retain bounded evidence.
+author: Siteverb
+
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  url:
+    description: Running local or preview URL to test.
+    required: true
+  contract:
+    description: Path to siteverb.webmcp.json, relative to working-directory.
+    required: false
+    default: siteverb.webmcp.json
+  output:
+    description: Report path, relative to working-directory.
+    required: false
+    default: .siteverb/report.json
+  working-directory:
+    description: Repository directory containing the contract.
+    required: false
+    default: .
+  runner-version:
+    description: Exact @siteverb/runner version to execute.
+    required: false
+    default: 0.1.0
+  audit-version:
+    description: Exact @siteverb/audit version to execute.
+    required: false
+    default: 0.1.0
+  audit:
+    description: Compare source registration ownership with the portable contract.
+    required: false
+    default: 'true'
+  audit-output:
+    description: Static audit report path, relative to working-directory.
+    required: false
+    default: .siteverb/audit.json
+  strict-external:
+    description: Treat known third-party registration runtimes as audit errors.
+    required: false
+    default: 'false'
+  chrome-channel:
+    description: Chrome release channel installed on the runner.
+    required: false
+    default: chrome
+  timeout:
+    description: Per-navigation and per-tool timeout in milliseconds.
+    required: false
+    default: '30000'
+  journey:
+    description: Optional comma-separated stable journey IDs.
+    required: false
+    default: ''
+  profile:
+    description: Optional comma-separated versioned client profile IDs.
+    required: false
+    default: ''
+  allow-mutations:
+    description: Permit state-changing tools against this explicitly approved test target.
+    required: false
+    default: 'false'
+  approved-tools:
+    description: Comma-separated stable tool IDs approved for guarded journey steps.
+    required: false
+    default: ''
+  upload-report:
+    description: Upload the bounded JSON report as a workflow artifact.
+    required: false
+    default: 'true'
+  artifact-name:
+    description: Workflow artifact name for the report.
+    required: false
+    default: siteverb-report
+
+outputs:
+  report:
+    description: Report path relative to working-directory.
+    value: ${{ inputs.output }}
+  passed:
+    description: Number of passing journeys.
+    value: ${{ steps.summary.outputs.passed }}
+  failed:
+    description: Number of failing journeys.
+    value: ${{ steps.summary.outputs.failed }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+      with:
+        node-version: '24'
+
+    - name: Audit Siteverb source coverage
+      id: audit
+      if: inputs.audit == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        SITEVERB_AUDIT_VERSION: ${{ inputs.audit-version }}
+        SITEVERB_AUDIT_OUTPUT: ${{ inputs.audit-output }}
+        SITEVERB_CONTRACT: ${{ inputs.contract }}
+        SITEVERB_STRICT_EXTERNAL: ${{ inputs.strict-external }}
+      run: |
+        if [[ ! "$SITEVERB_AUDIT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([+-][A-Za-z0-9.-]+)?$ ]]; then
+          echo "audit-version must be an exact semantic version" >&2
+          exit 2
+        fi
+
+        args=(--root . --contract "$SITEVERB_CONTRACT" --output "$SITEVERB_AUDIT_OUTPUT")
+        if [[ "$SITEVERB_STRICT_EXTERNAL" == "true" ]]; then args+=(--strict-external); fi
+
+        set +e
+        npm exec --yes --package "@siteverb/audit@$SITEVERB_AUDIT_VERSION" -- siteverb-audit "${args[@]}"
+        exit_code=$?
+        set -e
+        echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+
+    - name: Run Siteverb journeys
+      id: runner
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        SITEVERB_URL: ${{ inputs.url }}
+        SITEVERB_CONTRACT: ${{ inputs.contract }}
+        SITEVERB_OUTPUT: ${{ inputs.output }}
+        SITEVERB_RUNNER_VERSION: ${{ inputs.runner-version }}
+        SITEVERB_CHROME_CHANNEL: ${{ inputs.chrome-channel }}
+        SITEVERB_TIMEOUT: ${{ inputs.timeout }}
+        SITEVERB_JOURNEY: ${{ inputs.journey }}
+        SITEVERB_PROFILE: ${{ inputs.profile }}
+        SITEVERB_ALLOW_MUTATIONS: ${{ inputs.allow-mutations }}
+        SITEVERB_APPROVED_TOOLS: ${{ inputs.approved-tools }}
+      run: |
+        if [[ ! "$SITEVERB_RUNNER_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([+-][A-Za-z0-9.-]+)?$ ]]; then
+          echo "runner-version must be an exact semantic version" >&2
+          exit 2
+        fi
+
+        args=(
+          --contract "$SITEVERB_CONTRACT"
+          --url "$SITEVERB_URL"
+          --output "$SITEVERB_OUTPUT"
+          --chrome-channel "$SITEVERB_CHROME_CHANNEL"
+          --timeout "$SITEVERB_TIMEOUT"
+        )
+        if [[ -n "$SITEVERB_JOURNEY" ]]; then args+=(--journey "$SITEVERB_JOURNEY"); fi
+        if [[ -n "$SITEVERB_PROFILE" ]]; then args+=(--profile "$SITEVERB_PROFILE"); fi
+        if [[ "$SITEVERB_ALLOW_MUTATIONS" == "true" ]]; then args+=(--allow-mutations); fi
+        if [[ -n "$SITEVERB_APPROVED_TOOLS" ]]; then args+=(--approve "$SITEVERB_APPROVED_TOOLS"); fi
+
+        set +e
+        npm exec --yes --package "@siteverb/runner@$SITEVERB_RUNNER_VERSION" -- siteverb-run "${args[@]}"
+        exit_code=$?
+        set -e
+        echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+
+    - name: Write job summary
+      id: summary
+      if: always()
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        SITEVERB_REPORT: ${{ inputs.output }}
+        SITEVERB_AUDIT_ENABLED: ${{ inputs.audit }}
+        SITEVERB_AUDIT_REPORT: ${{ inputs.audit-output }}
+      run: node "$GITHUB_ACTION_PATH/report-summary.mjs"
+
+    - name: Upload reports
+      if: always() && inputs.upload-report == 'true' && inputs.audit == 'true'
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: |
+          ${{ inputs.working-directory }}/${{ inputs.output }}
+          ${{ inputs.working-directory }}/${{ inputs.audit-output }}
+        if-no-files-found: warn
+        retention-days: 14
+
+    - name: Upload journey report
+      if: always() && inputs.upload-report == 'true' && inputs.audit != 'true'
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.working-directory }}/${{ inputs.output }}
+        if-no-files-found: warn
+        retention-days: 14
+
+    - name: Apply Siteverb conclusion
+      if: always()
+      shell: bash
+      env:
+        SITEVERB_AUDIT_EXIT_CODE: ${{ steps.audit.outputs.exit_code }}
+        SITEVERB_EXIT_CODE: ${{ steps.runner.outputs.exit_code }}
+      run: |
+        if [[ "${SITEVERB_AUDIT_EXIT_CODE:-0}" != "0" ]]; then
+          exit "$SITEVERB_AUDIT_EXIT_CODE"
+        fi
+        exit "${SITEVERB_EXIT_CODE:-2}"

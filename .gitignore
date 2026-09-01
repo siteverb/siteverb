@@ -1,0 +1,6 @@
+node_modules/
+dist/
+coverage/
+.siteverb/
+*.tgz
+.DS_Store
