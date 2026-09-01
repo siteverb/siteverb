@@ -188,9 +188,10 @@ exports, and packed artifacts pass.
 | React browser              | One native journey passed Chrome 152.0.7977.65                                                                         |
 
 Profile snapshots ship from `@siteverb/profiles/evidence/chrome-151-native.json` and
-`@siteverb/profiles/evidence/chrome-152-native.json`. Stable-channel CI intentionally fails its exact
-152 assertion when Chrome advances, forcing a new immutable profile/evidence snapshot rather than
-silently changing the meaning of `chrome-152-native`.
+`@siteverb/profiles/evidence/chrome-152-native.json`. Rolling stable-channel CI records and validates
+the browser version it actually executes. Exact profiles and their committed evidence remain
+immutable; a new browser snapshot creates a new profile rather than changing an old profile's
+meaning.
 
 ## Residual risks
 

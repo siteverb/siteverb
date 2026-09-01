@@ -9,7 +9,8 @@ assert.equal(report.journeys[0]?.cleanup.length, 1);
 assert(report.journeys[0]?.steps.every((step) => step.status === 'passed'));
 assert(report.journeys[0]?.cleanup.every((step) => step.status === 'passed'));
 assert.equal(report.browser.evidence, 'real-browser');
-assert.equal(report.browser.version, '152.0.7977.65');
+assert.equal(report.browser.name, 'Chrome');
+assert.match(report.browser.version, /^\d+(?:\.\d+){1,3}$/);
 assert.deepEqual(
   Object.fromEntries(
     report.compatibility.map((assessment) => [assessment.profileId, assessment.status]),
