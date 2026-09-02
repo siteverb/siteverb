@@ -6,9 +6,9 @@ Siteverb turns existing website behavior into customer-owned WebMCP tools, binds
 portable journey contract, and verifies the contract through static source coverage and real-browser
 execution.
 
-> Pre-release: six `@siteverb` npm packages are available as `0.1.0-rc.0` through the `next`
-> dist-tag. npm's first-publication rule temporarily also resolves `latest` to RC.0; the
-> `siteverb/siteverb` GitHub Action and npm packages become stable at `v0.1.0`.
+> Stable: six `@siteverb` npm packages are available as `0.1.0` through the `latest` dist-tag.
+> They are published from the protected `v0.1.0` GitHub release through OIDC with signed SLSA
+> provenance. The GitHub Action is available at `siteverb/siteverb/actions/siteverb@v0.1.0`.
 
 ## What is included
 

@@ -1,9 +1,21 @@
 # Publishing Siteverb to npm
 
-**Reviewed:** 2026-09-01
+**Reviewed:** 2026-09-02
 
 Siteverb publishes six real public packages under one npm organization scope. Do not publish empty
 placeholder packages merely to reserve names.
+
+## Current release state
+
+Stable `v0.1.0` was published from commit `23a19681b1d5d5c4cedde4390144c0d3d8a4caee`
+through GitHub Actions run `33593655166`. All six packages resolve `latest` to `0.1.0`; `next`
+remains on the provenance-tested `0.1.0-rc.1` canary.
+
+Each stable tarball has an npm publish attestation and SLSA v1 provenance binding its SHA-512 digest
+to `siteverb/siteverb`, `.github/workflows/release.yml`, `refs/tags/v0.1.0`, the release commit, and
+the successful workflow run. A clean consumer install verified every public ESM, browser, testing,
+eval, and JSON Schema export; both CLIs; zero moderate-or-higher vulnerabilities; and no missing or
+invalid registry signatures.
 
 ## Reserve the namespace first
 
@@ -144,9 +156,24 @@ environment before consuming the stable version.
    order through npm OIDC with provenance.
 
 After it succeeds, verify each package page, `latest` dist-tag, repository link, public visibility,
-and provenance statement. Then, for every package, set **Publishing access** to **Require two-factor
-authentication and disallow tokens**. Revoke any temporary publish token if one was ever created;
-the documented bootstrap requires none.
+and provenance statement.
+
+The `v0.1.0` release completed this sequence successfully. For every package, the remaining
+account-level hardening is to set **Publishing access** to **Require two-factor authentication and
+disallow tokens**, equivalent to:
+
+```sh
+npm access set mfa=publish @siteverb/contracts
+npm access set mfa=publish @siteverb/webmcp
+npm access set mfa=publish @siteverb/react
+npm access set mfa=publish @siteverb/profiles
+npm access set mfa=publish @siteverb/audit
+npm access set mfa=publish @siteverb/runner
+```
+
+These changes require fresh interactive npm proof-of-presence. They disable traditional automation
+tokens but do not disable the package's narrowly scoped OIDC trusted publisher. Revoke any temporary
+publish token if one was ever created; the documented bootstrap requires none.
 
 ## Important failure rules
 
@@ -158,7 +185,8 @@ the documented bootstrap requires none.
   returns `400 Bad Request` by design.
 - Stop after any partial failure and inspect registry state before retrying. Do not blindly rerun the
   entire list because already-published versions will fail.
-- Do not create the GitHub `v0.1.0` release until all six trusted-publisher entries are configured.
+- Do not create a GitHub release until every package's trusted-publisher entry and protected
+  environment are configured and proven by a prerelease canary.
 
 ## Current source automation
 

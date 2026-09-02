@@ -2,7 +2,7 @@
 
 All notable changes to the fixed Siteverb public package train are recorded here.
 
-## 0.1.0 - Unreleased
+## 0.1.0 - 2026-09-02
 
 - Add the native-first `@siteverb/webmcp` SDK and metadata-only telemetry contract.
 - Add portable project and evidence schemas in `@siteverb/contracts`.
@@ -16,3 +16,5 @@ All notable changes to the fixed Siteverb public package train are recorded here
 - Add committed bounded Chrome 151/152 evidence, origin and report privacy controls, aborting runner
   timeouts, Strict Mode/SSR lifecycle hardening, expanded source extraction, and immutable Action
   dependencies.
+- Publish all six packages through a protected GitHub environment and npm trusted publishing with
+  signed npm publish and SLSA provenance attestations.

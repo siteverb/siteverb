@@ -1,7 +1,7 @@
 # Siteverb public repository audit
 
-**Audit date:** 2026-09-01  
-**Release candidate:** 0.1.0  
+**Audit date:** 2026-09-02
+**Stable release:** 0.1.0
 **Scope:** Public `siteverb` repository only
 
 ## Verdict
@@ -15,6 +15,10 @@ No known release-blocking implementation defect remains. The final source gate p
 across 14 files, all workspace typechecks/builds, six public package checks, the fixed 0.1.0 release
 train, zero npm vulnerabilities, three native Chrome integrations, and clean source audits for every
 fixture.
+
+Stable `v0.1.0` is published from commit `23a19681b1d5d5c4cedde4390144c0d3d8a4caee`.
+All six npm packages resolve `latest` to `0.1.0` and carry signed npm publish plus SLSA v1
+provenance for the protected release workflow.
 
 This is not a certification that a website, agent, or WebMCP tool is secure. Registration remains
 capability discovery; the application's server remains the authentication, authorization,
@@ -169,6 +173,8 @@ without evidence.
 | Package checks     | Six `publint` and ESM-only `attw` checks pass                      |
 | Release train      | Six public packages fixed at 0.1.0 with compatible internal ranges |
 | Dependency audit   | 0 vulnerabilities                                                  |
+| npm signatures     | Clean consumer reports 0 missing and 0 invalid signatures          |
+| Stable provenance  | Six publish and six SLSA v1 attestations match release commit/run  |
 
 The `attw` output intentionally warns that CommonJS `require` cannot consume ESM-only entries without
 dynamic `import()`. The package contract is explicitly ESM-only; ESM, bundler, declarations, JSON
@@ -211,19 +217,26 @@ These are platform or product boundaries, not hidden implementation claims:
 - The future collector must independently authenticate organization configuration, validate events,
   rate limit, deduplicate, retain/delete lawfully, and treat public site IDs as spoofable.
 
-## Human-controlled release prerequisites
+## Release controls and evidence
 
-The public repository, npm scope, and six `0.1.0-rc.0` package records now exist. Before stable
-`0.1.0`, the maintainer must:
+The stable release completed the human-controlled release sequence:
 
-1. Configure the protected GitHub `npm` environment and each package's exact trusted publisher.
-2. Protect `main` and `v*` release tags; require CI and CodeQL; disallow force pushes/deletions.
-3. Enable Dependabot alerts/updates, secret scanning, push protection, and private vulnerability reporting.
-4. Publish `0.1.0-rc.1` through OIDC and verify provenance on all six packages.
-5. Confirm `next` advances to RC.1 while npm's required `latest` tag remains at RC.0.
-6. Perform trademark/domain clearance before paid launch.
-7. Create `v0.1.0` only after the remote checks and OIDC canary pass; stable publication advances
-   `latest` to `0.1.0`.
+1. The protected GitHub `npm` environment requires maintainer approval and accepts only `v*` tags.
+2. `main` requires strict CI and CodeQL checks, pull requests, linear history, and resolved
+   conversations; force pushes and deletion are disabled.
+3. An active release-tag ruleset restricts creation, updates, deletion, and non-fast-forward changes.
+4. Dependabot vulnerability alerts/security updates, automated fixes, secret scanning, push
+   protection, private vulnerability reporting, and CodeQL are active with zero open CodeQL alerts.
+5. `0.1.0-rc.1` proved all six exact npm trusted-publisher records and signed provenance before
+   stable publication.
+6. Stable workflow run `33593655166` passed source checks, package checks, three native browser
+   integrations, exact-tag validation, and six-package OIDC publication.
+7. Every stable package has `gitHead` `23a19681b1d5d5c4cedde4390144c0d3d8a4caee`, and a clean
+   consumer verified exports, schemas, CLIs, dependency audit, and registry signatures.
+
+Remaining account-level hardening is to set each npm package to require interactive 2FA and disallow
+traditional publish tokens. This does not block its verified OIDC trusted publisher. Trademark and
+domain clearance remain required before paid launch.
 
 ## Scope explicitly not started
 
@@ -231,4 +244,4 @@ The public repository does not contain the hosted dashboard, collector, GitHub A
 storage, billing, cloud orchestration, or production analytics. Those belong together in the future
 private `siteverb-cloud` monorepo after this standalone conversion and release workflow is accepted.
 
-No stable npm publication, hosted service, or deployment is part of this audit.
+No hosted service or Siteverb cloud deployment is part of this audit.
