@@ -158,9 +158,9 @@ environment before consuming the stable version.
 After it succeeds, verify each package page, `latest` dist-tag, repository link, public visibility,
 and provenance statement.
 
-The `v0.1.0` release completed this sequence successfully. For every package, the remaining
-account-level hardening is to set **Publishing access** to **Require two-factor authentication and
-disallow tokens**, equivalent to:
+The `v0.1.0` release completed this sequence successfully. After its OIDC provenance and consumer
+acceptance checks passed, every package was set to **Require two-factor authentication and disallow
+tokens**, equivalent to:
 
 ```sh
 npm access set mfa=publish @siteverb/contracts
@@ -171,9 +171,10 @@ npm access set mfa=publish @siteverb/audit
 npm access set mfa=publish @siteverb/runner
 ```
 
-These changes require fresh interactive npm proof-of-presence. They disable traditional automation
-tokens but do not disable the package's narrowly scoped OIDC trusted publisher. Revoke any temporary
-publish token if one was ever created; the documented bootstrap requires none.
+Each change used fresh interactive npm proof-of-presence and completed through the package-access
+endpoint. The policy disables traditional automation tokens but does not disable the package's
+narrowly scoped OIDC trusted publisher. Revoke any temporary publish token if one was ever created;
+the documented bootstrap requires none.
 
 ## Important failure rules
 
