@@ -233,10 +233,10 @@ The stable release completed the human-controlled release sequence:
    integrations, exact-tag validation, and six-package OIDC publication.
 7. Every stable package has `gitHead` `23a19681b1d5d5c4cedde4390144c0d3d8a4caee`, and a clean
    consumer verified exports, schemas, CLIs, dependency audit, and registry signatures.
+8. All six npm packages require interactive 2FA and disallow traditional publish tokens while
+   retaining their verified OIDC trusted publishers.
 
-Remaining account-level hardening is to set each npm package to require interactive 2FA and disallow
-traditional publish tokens. This does not block its verified OIDC trusted publisher. Trademark and
-domain clearance remain required before paid launch.
+Trademark and domain clearance remain required before paid launch.
 
 ## Scope explicitly not started
 
