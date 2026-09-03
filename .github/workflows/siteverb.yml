@@ -1,0 +1,50 @@
+name: Siteverb WebMCP
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: siteverb-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  journeys:
+    name: journeys
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Build the controlled stateful fixture
+        run: |
+          npm run build --workspace @siteverb/webmcp
+          npm run build --workspace @siteverb/example-stateful
+      - name: Start the fixture
+        run: |
+          npm run preview --workspace @siteverb/example-stateful > "$RUNNER_TEMP/siteverb-preview.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/siteverb-preview.pid"
+          curl --fail --silent --show-error --retry 30 --retry-delay 1 --retry-connrefused http://127.0.0.1:4174
+      - name: Run customer-owned Siteverb evidence
+        uses: ./actions/siteverb
+        with:
+          url: http://127.0.0.1:4174
+          contract: siteverb.webmcp.json
+          working-directory: examples/stateful
+          profile: chrome-152-native
+          allow-mutations: 'true'
+          approved-tools: cart.prepare-checkout
+          artifact-name: siteverb-report
+      - name: Stop the fixture
+        if: always()
+        run: |
+          if [[ -f "$RUNNER_TEMP/siteverb-preview.pid" ]]; then
+            kill "$(cat "$RUNNER_TEMP/siteverb-preview.pid")" 2>/dev/null || true
+          fi
