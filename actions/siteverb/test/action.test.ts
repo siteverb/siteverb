@@ -22,8 +22,17 @@ describe('Siteverb composite action', () => {
     expect(source).toContain(
       'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4',
     );
-    expect(source).toContain('npm exec --yes --package');
+    expect(source).toContain('${{ runner.temp }}/siteverb-tools');
+    expect(source).toContain('npm install \\');
+    expect(source).toContain('--ignore-scripts');
     expect(source).toContain('@siteverb/audit@$SITEVERB_AUDIT_VERSION');
+    expect(source).toContain(
+      'node "$SITEVERB_TOOLS_ROOT/node_modules/@siteverb/audit/dist/cli.js"',
+    );
+    expect(source).toContain(
+      'node "$SITEVERB_TOOLS_ROOT/node_modules/@siteverb/runner/dist/cli.js"',
+    );
+    expect(source).not.toContain('npm exec --yes --package');
     expect(source).not.toContain('pull_request_target');
     expect(source).toContain('SITEVERB_AUDIT_EXIT_CODE');
     expect(source).toContain("inputs.audit == 'true'");
