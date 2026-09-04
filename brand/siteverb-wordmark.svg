@@ -1,13 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
   <title id="title">Siteverb wordmark</title>
   <desc id="desc">Siteverb mark and product name.</desc>
+  <defs>
+    <clipPath id="siteverb-action">
+      <path d="M75 74h197c12 0 24 5 32 14l151 146c13 12 13 32 0 44L304 424c-8 9-20 14-32 14H75c-18 0-33-15-33-33V107c0-18 15-33 33-33Z"/>
+    </clipPath>
+  </defs>
   <rect width="1200" height="300" fill="#f4f7f2"/>
-  <g transform="translate(44 32) scale(.46)">
-    <rect width="512" height="512" rx="128" fill="#10161b"/>
-    <path d="M145 354C195 399 293 402 337 365C378 331 355 284 291 276L216 266C143 257 117 208 157 166C201 122 298 125 350 157H370" fill="none" stroke="#f4f7f2" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="145" cy="354" r="23" fill="#22b573" stroke="#10161b" stroke-width="12"/>
-    <path d="m344 128 34 29-34 29" fill="none" stroke="#ff6854" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="278" cy="274" r="10" fill="#f5c84c"/>
+  <g transform="translate(42 22) scale(.5)" clip-path="url(#siteverb-action)" fill="#10161b">
+    <rect y="72" width="512" height="40" rx="20"/>
+    <rect y="136" width="512" height="40" rx="20"/>
+    <rect y="200" width="512" height="40" rx="20"/>
+    <rect y="264" width="512" height="40" rx="20"/>
+    <rect y="328" width="512" height="40" rx="20"/>
+    <rect y="392" width="512" height="40" rx="20"/>
   </g>
-  <text x="330" y="194" fill="#10161b" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="142" font-weight="700">siteverb</text>
+  <text x="326" y="194" fill="#10161b" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="142" font-weight="600" letter-spacing="-4">siteverb</text>
 </svg>

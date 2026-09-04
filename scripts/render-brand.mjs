@@ -28,7 +28,7 @@ try {
       await page.setViewport({ width: item.width, height: item.height, deviceScaleFactor: 1 });
       const data = Buffer.from(svg).toString('base64');
       await page.setContent(
-        `<!doctype html><style>html,body{margin:0;width:100%;height:100%;overflow:hidden}img{display:block;width:100%;height:100%}</style><img alt="" src="data:image/svg+xml;base64,${data}">`,
+        `<!doctype html><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f7f2}img{display:block;width:100%;height:100%}</style><img alt="" src="data:image/svg+xml;base64,${data}">`,
       );
       await page.locator('img').waitHandle();
       await mkdir(resolve(item.output, '..'), { recursive: true });

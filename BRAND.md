@@ -14,9 +14,14 @@ agent, or a security guarantee.
 
 ## Visual system
 
-The mark turns an `S` into a connected action path: a green source, an evidence checkpoint, and a
-coral invocation arrow. Its flat silhouette must remain legible as a small organization avatar and
-must not be redrawn as another product's initial or striped analytics glyph.
+The mark shows the product in one gesture: parallel horizontal lanes represent declared website
+tools, and their shared silhouette resolves into one forward action. It is not a letterform, badge,
+or miniature interface. Siteverb's deterministic proof belongs to the product promise and does not
+need a second symbol inside the mark.
+
+The primary glyph is one ink on a transparent or paper field. Supporting colors belong to product
+states and illustrations, not individual logo lanes. Preserve the forward clip and parallel-lane
+rhythm at every size; never redraw it as another product's ring or analytics glyph.
 
 | Token    | Hex       | Use                               |
 | -------- | --------- | --------------------------------- |
@@ -30,6 +35,7 @@ must not be redrawn as another product's initial or striped analytics glyph.
 Assets:
 
 - `brand/siteverb-mark.svg`: vector avatar source.
+- `brand/siteverb-favicon.svg`: contrast-safe favicon treatment.
 - `brand/siteverb-avatar.png`: 512 x 512 GitHub/npm avatar.
 - `brand/siteverb-wordmark.svg`: horizontal wordmark.
 - `brand/siteverb-social-preview.png`: 1280 x 640 GitHub social preview.
