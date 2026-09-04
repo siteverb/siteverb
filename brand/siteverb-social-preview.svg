@@ -8,19 +8,17 @@
   </defs>
   <rect width="1280" height="640" fill="#f4f7f2"/>
   <rect width="1280" height="640" fill="url(#grid)" opacity=".7"/>
-  <rect x="72" y="100" width="440" height="440" rx="88" fill="#10161b"/>
-  <rect x="134" y="174" width="316" height="292" rx="38" fill="#f4f7f2"/>
-  <path d="M134 232h316" stroke="#10161b" stroke-width="15"/>
-  <circle cx="176" cy="202" r="10" fill="#ff6854"/>
-  <circle cx="210" cy="202" r="10" fill="#22b573"/>
-  <circle cx="244" cy="202" r="10" fill="#f5c84c"/>
-  <path d="M198 294h105c25 0 37 31 18 46l-52 40c-19 15-7 46 18 46h89" fill="none" stroke="#10161b" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="198" cy="294" r="21" fill="#22b573" stroke="#10161b" stroke-width="12"/>
-  <path d="m357 398 35 30-35 30" fill="none" stroke="#ff6854" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(72 100) scale(.859375)">
+    <rect width="512" height="512" rx="128" fill="#10161b"/>
+    <path d="M145 354C195 399 293 402 337 365C378 331 355 284 291 276L216 266C143 257 117 208 157 166C201 122 298 125 350 157H370" fill="none" stroke="#f4f7f2" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="145" cy="354" r="23" fill="#22b573" stroke="#10161b" stroke-width="12"/>
+    <path d="m344 128 34 29-34 29" fill="none" stroke="#ff6854" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="278" cy="274" r="10" fill="#f5c84c"/>
+  </g>
   <text x="586" y="160" fill="#426054" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="27" font-weight="700">WEBMCP RELEASE INFRASTRUCTURE</text>
   <text x="582" y="304" fill="#10161b" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="126" font-weight="700">siteverb</text>
-  <text x="590" y="384" fill="#10161b" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="46" font-weight="600">Create. Prove. Improve.</text>
-  <text x="590" y="446" fill="#56616a" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="28">Customer-owned tools, contracts, and CI.</text>
+  <text x="590" y="384" fill="#10161b" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="40" font-weight="600">Reliable tools for AI agents.</text>
+  <text x="590" y="438" fill="#56616a" font-family="Avenir Next, Avenir, Helvetica Neue, sans-serif" font-size="31">Proof for every release.</text>
   <rect x="590" y="490" width="88" height="10" rx="5" fill="#22b573"/>
   <rect x="694" y="490" width="54" height="10" rx="5" fill="#ff6854"/>
   <rect x="764" y="490" width="34" height="10" rx="5" fill="#f5c84c"/>
