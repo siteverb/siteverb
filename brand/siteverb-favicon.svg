@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Siteverb mark</title>
+  <title id="title">Siteverb favicon</title>
   <desc id="desc">Parallel website tool lanes resolving into one forward action.</desc>
   <defs>
-    <clipPath id="siteverb-action">
+    <clipPath id="siteverb-favicon-action">
       <path d="M75 74h197c12 0 24 5 32 14l151 146c13 12 13 32 0 44L304 424c-8 9-20 14-32 14H75c-18 0-33-15-33-33V107c0-18 15-33 33-33Z"/>
     </clipPath>
   </defs>
-  <g clip-path="url(#siteverb-action)" fill="#10161b">
+  <rect width="512" height="512" rx="112" fill="#f4f7f2"/>
+  <g clip-path="url(#siteverb-favicon-action)" fill="#10161b">
     <rect y="72" width="512" height="40" rx="20"/>
     <rect y="136" width="512" height="40" rx="20"/>
     <rect y="200" width="512" height="40" rx="20"/>
