@@ -14,8 +14,9 @@ agent, or a security guarantee.
 
 ## Visual system
 
-The mark combines a browser frame with a connected action path. It should remain legible as a small
-organization avatar.
+The mark turns an `S` into a connected action path: a green source, an evidence checkpoint, and a
+coral invocation arrow. Its flat silhouette must remain legible as a small organization avatar and
+must not be redrawn as another product's initial or striped analytics glyph.
 
 | Token    | Hex       | Use                               |
 | -------- | --------- | --------------------------------- |
