@@ -76,6 +76,20 @@ describe('auditProject', () => {
     expect(JSON.stringify(report)).not.toContain(root);
   });
 
+  it('ignores non-executable TypeScript declaration files', async () => {
+    const root = await fixture(`
+      import { defineTool } from '@siteverb/webmcp';
+      defineTool({ id: 'catalog.search', name: 'search', description: 'Search.', execute: () => [] });
+    `);
+    await writeFile(join(root, 'worker-configuration.d.ts'), 'declare const generated: {');
+
+    const report = await auditProject({ root, contractPath: 'siteverb.webmcp.json' });
+
+    expect(report.summary).toEqual(
+      expect.objectContaining({ errors: 0, warnings: 0, filesScanned: 1 }),
+    );
+  });
+
   it('blocks raw native registrations and source tools missing from the contract', async () => {
     const root = await fixture(`
       import { defineTool } from '@siteverb/webmcp';

@@ -2,6 +2,11 @@
 
 All notable changes to the fixed Siteverb public package train are recorded here.
 
+## Unreleased
+
+- Align native runner launches with Chrome 152's WebMCP testing and DevTools feature switches.
+- Ignore non-executable TypeScript declaration files during source ownership audits.
+
 ## 0.1.0 - 2026-09-02
 
 - Add the native-first `@siteverb/webmcp` SDK and metadata-only telemetry contract.
