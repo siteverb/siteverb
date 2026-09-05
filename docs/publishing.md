@@ -192,6 +192,8 @@ OIDC provenance as `0.1.0`; no npm token is required.
    provenance, moving `latest` to `0.1.1`.
 4. Verify each package page resolves `latest` to `0.1.1` with a signed provenance statement, then run
    a clean consumer install to confirm every export and both CLIs.
+5. Bump `.github/workflows/siteverb.yml` `runner-version`/`audit-version` to `0.1.1` so the dogfood
+   smoke test exercises the published release instead of the prior stable.
 
 `0.1.1` is immutable once any package reaches npm. Do not reuse the version after a partial publish;
 inspect registry state and continue only with the packages that did not publish.
