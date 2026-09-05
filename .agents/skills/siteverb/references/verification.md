@@ -26,7 +26,7 @@ then execute and verify cleanup.
 ## Siteverb runner
 
 ```sh
-npx --yes @siteverb/runner@0.1.0 \
+npx --yes @siteverb/runner@0.1.1 \
   --contract siteverb.webmcp.json \
   --url http://127.0.0.1:3000 \
   --output .siteverb/report.json \

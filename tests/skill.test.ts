@@ -56,7 +56,7 @@ describe('Siteverb Agent Skill', () => {
       }),
     );
     expect(workflow.permissions).toEqual({ contents: 'read' });
-    expect(JSON.stringify(workflow)).toContain('siteverb/siteverb/actions/siteverb@v0.1.0');
+    expect(JSON.stringify(workflow)).toContain('siteverb/siteverb/actions/siteverb@v0.1.1');
     expect(ignore).toMatch(/^\.siteverb\/$/m);
   });
 

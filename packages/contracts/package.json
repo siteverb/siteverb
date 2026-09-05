@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/contracts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Portable project contracts and evidence reports for Siteverb WebMCP journeys.",
   "type": "module",
   "sideEffects": false,

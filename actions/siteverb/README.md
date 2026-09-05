@@ -3,7 +3,7 @@
 Run deterministic WebMCP journeys on the repository's own GitHub runner.
 
 ```yaml
-- uses: siteverb/siteverb/actions/siteverb@v0.1.0
+- uses: siteverb/siteverb/actions/siteverb@v0.1.1
   with:
     url: http://127.0.0.1:3000
     contract: siteverb.webmcp.json

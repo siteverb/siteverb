@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/audit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Static coverage audit for Siteverb and WebMCP registration paths.",
   "type": "module",
   "sideEffects": false,
@@ -46,7 +46,7 @@
     "provenance": true
   },
   "dependencies": {
-    "@siteverb/contracts": "^0.1.0",
+    "@siteverb/contracts": "^0.1.1",
     "@babel/parser": "^7.28.4",
     "@babel/types": "^7.28.4",
     "parse5": "^8.0.0"

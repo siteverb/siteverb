@@ -25,11 +25,11 @@ inputs:
   runner-version:
     description: Exact @siteverb/runner version to execute.
     required: false
-    default: 0.1.0
+    default: 0.1.1
   audit-version:
     description: Exact @siteverb/audit version to execute.
     required: false
-    default: 0.1.0
+    default: 0.1.1
   audit:
     description: Compare source registration ownership with the portable contract.
     required: false

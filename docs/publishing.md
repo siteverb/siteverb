@@ -176,6 +176,26 @@ endpoint. The policy disables traditional automation tokens but does not disable
 narrowly scoped OIDC trusted publisher. Revoke any temporary publish token if one was ever created;
 the documented bootstrap requires none.
 
+## Publish patch release 0.1.1
+
+The `0.1.1` train ships the Chrome 152 native runner feature switches and the audit
+declaration-file fix. It reuses the same trusted-publisher entries, protected `npm` environment, and
+OIDC provenance as `0.1.0`; no npm token is required.
+
+1. Land the prepared train on `main` through a reviewed pull request: all six manifests and their
+   internal ranges at `0.1.1`, the `@siteverb/webmcp` and `@siteverb/runner` version constants, the
+   Action version defaults, and every `@v0.1.1` reference. CI and CodeQL must be green.
+2. From the merge commit, run `npm run check`, `npm audit --audit-level=moderate`, and all three
+   integration commands.
+3. Create and publish a GitHub Release tagged exactly `v0.1.1`. The protected `release.yml` workflow
+   revalidates the tree and publishes all six packages in dependency order through npm OIDC with
+   provenance, moving `latest` to `0.1.1`.
+4. Verify each package page resolves `latest` to `0.1.1` with a signed provenance statement, then run
+   a clean consumer install to confirm every export and both CLIs.
+
+`0.1.1` is immutable once any package reaches npm. Do not reuse the version after a partial publish;
+inspect registry state and continue only with the packages that did not publish.
+
 ## Important failure rules
 
 - Never publish from an uncommitted or unreviewed tree.

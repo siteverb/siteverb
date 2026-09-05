@@ -31,7 +31,7 @@ jobs:
           }
           throw new Error(`Application did not become ready at ${target}.`);
           NODE
-      - uses: siteverb/siteverb/actions/siteverb@v0.1.0
+      - uses: siteverb/siteverb/actions/siteverb@v0.1.1
         with:
           url: http://127.0.0.1:4173
           contract: siteverb.webmcp.json

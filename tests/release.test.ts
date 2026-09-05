@@ -55,7 +55,7 @@ describe('release train', () => {
       const references = Array.from(source.matchAll(/\buses:\s*([^\s#]+)/g), (match) => match[1]);
       expect(references.length, path).toBeGreaterThan(0);
       for (const reference of references) {
-        if (reference === 'siteverb/siteverb/actions/siteverb@v0.1.0') continue;
+        if (reference === 'siteverb/siteverb/actions/siteverb@v0.1.1') continue;
         expect(reference, `${path}: ${reference}`).toMatch(
           /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)?@[a-f0-9]{40}$/,
         );
