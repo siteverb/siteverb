@@ -1,6 +1,6 @@
 {
   "name": "@siteverb/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React and Next.js lifecycle bindings for @siteverb/webmcp.",
   "type": "module",
   "sideEffects": false,
@@ -43,7 +43,7 @@
     "provenance": true
   },
   "dependencies": {
-    "@siteverb/webmcp": "^0.1.0"
+    "@siteverb/webmcp": "^0.1.1"
   },
   "peerDependencies": {
     "react": ">=18.3"

@@ -33,12 +33,15 @@ jobs:
           echo "$!" > "$RUNNER_TEMP/siteverb-preview.pid"
           curl --fail --silent --show-error --retry 30 --retry-delay 1 --retry-connrefused http://127.0.0.1:4174
       - name: Run customer-owned Siteverb evidence
+        # Dogfood the published Action tools; action.yml defaults track the unreleased train.
         uses: ./actions/siteverb
         with:
           url: http://127.0.0.1:4174
           contract: siteverb.webmcp.json
           working-directory: examples/stateful
           profile: chrome-152-native
+          runner-version: 0.1.0
+          audit-version: 0.1.0
           allow-mutations: 'true'
           approved-tools: cart.prepare-checkout
           artifact-name: siteverb-report

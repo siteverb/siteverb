@@ -2,7 +2,7 @@
 
 All notable changes to the fixed Siteverb public package train are recorded here.
 
-## Unreleased
+## 0.1.1 - 2026-09-05
 
 - Align native runner launches with Chrome 152's WebMCP testing and DevTools feature switches.
 - Ignore non-executable TypeScript declaration files during source ownership audits.

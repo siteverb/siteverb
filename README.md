@@ -6,9 +6,9 @@ Siteverb turns existing website behavior into customer-owned WebMCP tools, binds
 portable journey contract, and verifies the contract through static source coverage and real-browser
 execution.
 
-> Stable: six `@siteverb` npm packages are available as `0.1.0` through the `latest` dist-tag.
-> They are published from the protected `v0.1.0` GitHub release through OIDC with signed SLSA
-> provenance. The GitHub Action is available at `siteverb/siteverb/actions/siteverb@v0.1.0`.
+> Stable: six `@siteverb` npm packages are available as `0.1.1` through the `latest` dist-tag.
+> They are published from the protected `v0.1.1` GitHub release through OIDC with signed SLSA
+> provenance. The GitHub Action is available at `siteverb/siteverb/actions/siteverb@v0.1.1`.
 
 ## What is included
 
@@ -147,7 +147,7 @@ Mutations and guarded tools require explicit CLI opt-ins.
 Start the app in the workflow, then run:
 
 ```yaml
-- uses: siteverb/siteverb/actions/siteverb@v0.1.0
+- uses: siteverb/siteverb/actions/siteverb@v0.1.1
   with:
     url: http://127.0.0.1:3000
     contract: siteverb.webmcp.json
