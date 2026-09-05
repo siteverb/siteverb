@@ -99,7 +99,7 @@
           "tool": "catalog.search-products",
           "input": { "query": "trail", "size": 11, "maxPrice": 160 },
           "expect": {
-            "result": { "contains": { "count": 1 } },
+            "result": { "contains": { "count": 2 } },
             "dom": [{ "selector": "#results", "textContains": "Trail shoe" }]
           }
         },
