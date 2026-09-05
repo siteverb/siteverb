@@ -114,7 +114,10 @@ class PuppeteerBrowserAdapter implements BrowserAdapter {
       channel,
       headless: options.headless ?? true,
       ...(options.executablePath === undefined ? {} : { executablePath: options.executablePath }),
-      args: ['--enable-features=WebMCP'],
+      args: [
+        '--enable-experimental-web-platform-features',
+        '--enable-features=WebMCPTesting,DevToolsWebMCPSupport',
+      ],
     });
     return new PuppeteerBrowserAdapter(browser, channel, await browser.version());
   }

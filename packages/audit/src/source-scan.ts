@@ -16,6 +16,7 @@ const ignoredDirectories = new Set([
   'node_modules',
 ]);
 const sourceExtension = /\.(?:[cm]?[jt]sx?)$/i;
+const declarationExtension = /\.d\.[cm]?ts$/i;
 const htmlExtension = /\.(?:html?|astro)$/i;
 const componentExtension = /\.(?:vue|svelte)$/i;
 const externalRuntimes = new Set([
@@ -501,7 +502,7 @@ async function collectFiles(directory: string, output: string[], limit: number):
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) await collectFiles(path, output, limit);
     else if (
-      sourceExtension.test(entry.name) ||
+      (!declarationExtension.test(entry.name) && sourceExtension.test(entry.name)) ||
       htmlExtension.test(entry.name) ||
       componentExtension.test(entry.name)
     )
