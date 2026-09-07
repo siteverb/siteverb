@@ -32,9 +32,9 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@testing-library/react": "^16.3.3",
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
+    "@types/react-dom": "^19.2.7",
     "esbuild": "^0.28.2",
     "jsdom": "^30.0.1",
     "prettier": "^3.9.6",
@@ -44,9 +44,9 @@
     "start-server-and-test": "^3.0.12",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
-    "vitest": "^4.1.11",
+    "vitest": "^5.0.0",
     "webmcp-evals": "0.0.4",
-    "webmcp-types": "^0.1.5",
+    "webmcp-types": "^0.1.6",
     "yaml": "^2.9.0"
   }
 }
