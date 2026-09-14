@@ -48,6 +48,6 @@
   "dependencies": {
     "@siteverb/contracts": "^0.1.1",
     "@siteverb/profiles": "^0.1.1",
-    "puppeteer-core": "25.9.0"
+    "puppeteer-core": "25.10.0"
   }
 }
